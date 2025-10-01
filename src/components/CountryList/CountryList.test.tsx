@@ -77,4 +77,18 @@ describe('CountriesList Test', () => {
         expect(await screen.findByText(mockCountries[0].name.common)).toBeInTheDocument();
         expect(await screen.findByText(mockCountries[1].name.common)).toBeInTheDocument();
     });
+
+    it('should render a loading spinner', async() => {
+        mockGetCountries.mockImplementationOnce(
+            () => new Promise(() => {}) // never resolves
+        );
+        render(<CountryList />);
+        expect(await screen.findByText('Loading...')).toBeInTheDocument();
+    });
+
+    it('should render an error message', async() => {
+        mockGetCountries.mockRejectedValueOnce(new Error(''));
+        render(<CountryList />);
+        expect(await screen.findByText('There was an error loading country information. Try refreshing the page.')).toBeInTheDocument();
+    });
 });

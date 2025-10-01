@@ -27,6 +27,8 @@ const CountryList: React.FC = () => {
     }, [])
 
     return <div>
+        {loading && <div className="loading-spinner">Loading...</div>}
+        {error && <div className="error-message">There was an error loading country information. Try refreshing the page.</div>}
         {countries.map(country => <CountryCard country={country} key={country.name.common} />)}
     </div>
 }
