@@ -25,8 +25,12 @@ const mockCountry: Country = {
         "population": 329484123
     };
 
-test('renders placeholder', () => {
-    render(<CountryCard country={mockCountry}/>);
-    const linkElement = screen.getByText(/CountryCard/);
-    expect(linkElement).toBeInTheDocument();
+describe('CountryCard test', () => {
+    it('renders country name', () => {
+        render(<CountryCard country={mockCountry}/>);
+        const linkElement = screen.getByText(new RegExp(mockCountry.name.common));
+        expect(linkElement).toBeInTheDocument();
+    });
+
+
 });
