@@ -38,4 +38,28 @@ describe('CountryCard test', () => {
         expect(img).toHaveAttribute('src', mockCountry.flags.svg);
         expect(img).toHaveAttribute('alt', mockCountry.flags.alt);
     });
+
+    it('renders the country population', () => {
+        render(<CountryCard country={mockCountry}/>);
+        const populationElement = screen.getByText(
+            new RegExp(`population: ${mockCountry.population}`)
+        );
+        expect(populationElement).toBeInTheDocument();
+    });
+
+    it('renders the country region', () => {
+        render(<CountryCard country={mockCountry}/>);
+        const regionElement = screen.getByText(
+            new RegExp(`region: ${mockCountry.region}`)
+        );
+        expect(regionElement).toBeInTheDocument();
+    });
+
+    it('renders the country capital', () => {
+        render(<CountryCard country={mockCountry}/>);
+        const capitalElement = screen.getByText(
+            new RegExp(`capital: ${mockCountry.capital.join(', ')}`)
+        );
+        expect(capitalElement).toBeInTheDocument();
+    });
 });
