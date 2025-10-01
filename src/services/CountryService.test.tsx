@@ -33,7 +33,7 @@ describe('CountryService.getCountries test', () => {
     });
 
     it('calls the restcountries all endpoint', async() => {
-        (global as any).fetch = jest.fn().mockResolvedValue({
+        global.fetch = jest.fn().mockResolvedValue({
             ok: true,
             json: jest.fn().mockResolvedValue(mockCountries)
         });
@@ -42,5 +42,25 @@ describe('CountryService.getCountries test', () => {
 
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(global.fetch).toHaveBeenCalledWith(url);
+    });
+
+    it('returns a list of countries when response is ok', async() => {
+        global.fetch = jest.fn().mockResolvedValue({
+            ok: true,
+            json: jest.fn().mockResolvedValue(mockCountries)
+        });
+
+        const result = await getCountries();
+
+        expect(result).toEqual(mockCountries);
+    });
+
+    it('throws an error when response is not ok', async() => {
+        global.fetch = jest.fn().mockResolvedValue({
+            ok: false,
+            json: jest.fn().mockResolvedValue(mockCountries)
+        });
+
+        await expect(getCountries()).rejects.toThrow();
     })
 });
