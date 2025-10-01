@@ -1,6 +1,7 @@
 import React from "react";
 import { Country } from "../../entities/types";
 import styles from './CountryCard.module.css'
+import { Link } from "react-router-dom";
 
 interface CountryCardProps {
     country: Country;
@@ -15,7 +16,10 @@ const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
             <p>Capital: {country.capital.join(', ')}</p>
             <p>Region: {country.region}</p>
         </div>
-        <button className={styles['country-card-button']}>See more</button>
+        <Link to={'/countries/' + country.cca3}>
+            <button className={styles['country-card-button']}>See more</button>
+        </Link>
+        
     </div>;
 }
 

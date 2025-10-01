@@ -20,5 +20,6 @@ export interface Country {
     flags: Flag,
     capital: Array<String>,
     population: number,
-    region: string
+    region: string,
+    cca3: string
 }

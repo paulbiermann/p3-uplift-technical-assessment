@@ -1,7 +1,7 @@
 import { getCountries } from './CountryService';
 import { Country } from '../entities/types';
 
-const url = 'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital';
+const url = 'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,cca3';
 const mockCountries: Country[] = [
     {
         "flags": {
@@ -23,7 +23,8 @@ const mockCountries: Country[] = [
             "Washington, D.C."
         ],
         "region": "Americas",
-        "population": 329484123
+        "population": 329484123,
+        "cca3": "USA",
     }
 ];
 
