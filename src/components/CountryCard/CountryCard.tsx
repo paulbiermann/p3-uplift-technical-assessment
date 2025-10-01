@@ -6,7 +6,10 @@ interface CountryCardProps {
 }
 
 const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
-    return <h1>CountryCard Placeholder: {country.name.common}</h1>
+    return (<div>
+        <img src={country.flags.svg} alt={country.flags.alt} />
+        <h2>{country.name.common}</h2>
+    </div>);
 }
 
 export default CountryCard;

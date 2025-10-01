@@ -32,5 +32,10 @@ describe('CountryCard test', () => {
         expect(linkElement).toBeInTheDocument();
     });
 
-
+    it('renders the country flag', () => {
+        render(<CountryCard country={mockCountry}/>);
+        const img = screen.getByRole('img');
+        expect(img).toHaveAttribute('src', mockCountry.flags.svg);
+        expect(img).toHaveAttribute('alt', mockCountry.flags.alt);
+    });
 });
