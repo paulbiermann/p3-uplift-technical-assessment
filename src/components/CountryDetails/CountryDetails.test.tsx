@@ -22,7 +22,8 @@ const mockCountry: Country = {
         "Washington, D.C."
     ],
     "region": "Americas",
-    "population": 329484123
+    "population": 329484123,
+    "cca3": "USA",
 };
 
 describe('CountryDetails test', () => {

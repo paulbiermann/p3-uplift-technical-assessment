@@ -31,7 +31,8 @@ const mockCountries: Country[] = [
             "Manila"
         ],
         "region": "Asia",
-        "population": 109581085
+        "population": 109581085,
+        "cca3": "PHL"
     },
     {
         "flags": {
@@ -57,7 +58,8 @@ const mockCountries: Country[] = [
             "Dodoma"
         ],
         "region": "Africa",
-        "population": 59734213
+        "population": 59734213,
+        "cca3": "TZA"
     }
 ];
 
