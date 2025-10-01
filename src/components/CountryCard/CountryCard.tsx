@@ -9,9 +9,9 @@ const CountryCard: React.FC<CountryCardProps> = ({ country }) => {
     return (<div>
         <img src={country.flags.svg} alt={country.flags.alt} />
         <h2>{country.name.common}</h2>
-        <p>population: {country.population}</p>
-        <p>capital: {country.capital.join(', ')}</p>
-        <p>region: {country.region}</p>
+        <p>Population: {country.population}</p>
+        <p>Capital: {country.capital.join(', ')}</p>
+        <p>Region: {country.region}</p>
     </div>);
 }
 

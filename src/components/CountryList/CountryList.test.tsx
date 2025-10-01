@@ -70,4 +70,11 @@ describe('CountriesList Test', () => {
             expect(mockGetCountries).toHaveBeenCalledTimes(1);
         });
     });
+
+    it('should render a list of country cards', async() => {
+        mockGetCountries.mockResolvedValueOnce(mockCountries);
+        render(<CountryList />);
+        expect(await screen.findByText(mockCountries[0].name.common)).toBeInTheDocument();
+        expect(await screen.findByText(mockCountries[1].name.common)).toBeInTheDocument();
+    });
 });

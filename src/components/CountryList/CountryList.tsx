@@ -4,7 +4,7 @@ import { Country } from "../../entities/types";
 import { getCountries } from "../../services/CountryService";
 
 const CountryList: React.FC = () => {
-    const [countries, setCountries] = React.useState<Country[] | null>(null);
+    const [countries, setCountries] = React.useState<Country[]>([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(false);
 
@@ -26,7 +26,9 @@ const CountryList: React.FC = () => {
         fetchCountries();
     }, [])
 
-    return <h1>CountryList Placeholder</h1>
+    return <div>
+        {countries.map(country => <CountryCard country={country} key={country.name.common} />)}
+    </div>
 }
 
 export default CountryList;
