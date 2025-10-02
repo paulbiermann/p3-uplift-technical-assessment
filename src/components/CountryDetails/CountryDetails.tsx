@@ -65,13 +65,13 @@ const CountryDetails: React.FC = () => {
                 <div>
                     <p>Currencies:</p>
                     <ul>
-                        {Object.keys(country.currencies).map(currencyCode => <li>{currencyCode}: {country.currencies[currencyCode].name} ({country.currencies[currencyCode].symbol})</li>)}
+                        {Object.keys(country.currencies).map(currencyCode => <li key={currencyCode}>{currencyCode}: {country.currencies[currencyCode].name} ({country.currencies[currencyCode].symbol})</li>)}
                     </ul>
                 </div>
                 <div>
                     <p>Timezones:</p>
                     <ul>
-                        {country.timezones.map(timezone => <li>{timezone}</li>)}
+                        {country.timezones.map(timezone => <li key={timezone}>{timezone}</li>)}
                     </ul>
                 </div>
             </div>
