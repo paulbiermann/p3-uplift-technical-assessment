@@ -43,7 +43,7 @@ const CountryDetails: React.FC = () => {
         fetchCountries();
     }, []);
 
-    return <div className={styles['country-modules-container']}>
+    return <div className={styles['country-details-container']}>
         <Link to={'/'}>
             <button>back</button>
         </Link>
@@ -51,7 +51,7 @@ const CountryDetails: React.FC = () => {
         {error && <div className={styles['error-message']}>There was an error loading country information. Try refreshing the page.</div>}
         {!!country && <>
             <h1>{country?.name?.official}</h1>
-            <div>
+            <div className={styles['country-details-stats']}>
                 <p>Common name: {country?.name?.common}</p>
                 <p>Alternative Spellings: {country.altSpellings.join(', ')}</p>
                 <p>Native Name ({Object.keys(country.name.nativeName)[0]}): {Object.values(country.name.nativeName)[0].official}</p>
@@ -61,19 +61,32 @@ const CountryDetails: React.FC = () => {
                 <p>Languages: {Object.values(country.languages).join(', ')}</p>
                 {!!country.borders && <p>Borders: {country.borders.join(', ')}</p>}
                 <p>Top Level Domain: {country.tld.join(', ')}</p>
-                <p>Independent: {country.independent}</p>
                 <p>Status: {country.status}</p>
-                
+                <div>
+                    <p>Currencies:</p>
+                    <ul>
+                        {Object.keys(country.currencies).map(currencyCode => <li>{currencyCode}: {country.currencies[currencyCode].name} ({country.currencies[currencyCode].symbol})</li>)}
+                    </ul>
+                </div>
+                <div>
+                    <p>Timezones:</p>
+                    <ul>
+                        {country.timezones.map(timezone => <li>{timezone}</li>)}
+                    </ul>
+                </div>
             </div>
-            <div>
-                <h2>Flag</h2>
-                <img src={country.flags.png} alt={country.flags.alt} />
-                <p>{country.flags.alt}</p>
+            <div className={styles['supporting-section']}>
+                <div className={styles['country-details-flag']}>
+                    <h2>Flag</h2>
+                    <img src={country.flags.png} alt={country.flags.alt} />
+                    <p>{country.flags.alt}</p>
+                </div>
+                {!!country.coatOfArms && <div className={styles['country-details-coat-of-arms']}>
+                    <h2>Coat of Arms</h2>
+                    <img src={country.coatOfArms.png} alt={country.name.common + ' coat of arms'} />
+                </div>}
             </div>
-            {!!country.coatOfArms && <div>
-                <h2>Coat of Arms</h2>
-                <img src={country.coatOfArms.png} alt={country.name.common + ' coat of arms'} />
-            </div>}
+            
         </>}
     </div>;
 }
