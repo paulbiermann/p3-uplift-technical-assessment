@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import { Country } from "../../entities/types";
+import { CountryFullDetails } from "../../entities/types";
 import { getCountryByCCA3 } from "../../services/CountryService";
 import styles from "./CountryDetails.module.css";
 
@@ -15,7 +15,7 @@ import styles from "./CountryDetails.module.css";
 const CountryDetails: React.FC = () => {
     const params = useParams();
 
-    const [country, setCountry] = React.useState<Country | undefined>(undefined);
+    const [country, setCountry] = React.useState<CountryFullDetails | undefined>(undefined);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(false);
 
@@ -44,11 +44,15 @@ const CountryDetails: React.FC = () => {
     }, []);
 
 
-    return <div>
+    return <div className={styles['country-modules-container']}>
         {loading && <div className={styles['loading-spinner']}>Loading...</div>}
         {error && <div className={styles['error-message']}>There was an error loading country information. Try refreshing the page.</div>}
         {!!country && <>
             <h1>{country?.name?.official}</h1>
+            <div>
+                <p>Common name: {country?.name?.common}</p>
+                <p>Top Level Domain: {country?.tld?.join(', ')}</p>
+            </div>
         </>}
     </div>;
 }

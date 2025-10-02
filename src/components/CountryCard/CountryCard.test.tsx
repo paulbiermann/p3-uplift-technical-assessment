@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import CountryCard from './CountryCard';
 import { Country } from '../../entities/types';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 const mockCountry: Country = {
     "flags": {
@@ -28,28 +29,47 @@ const mockCountry: Country = {
 
 describe('CountryCard test', () => {
     it('renders country name', () => {
-        render(<CountryCard country={mockCountry}/>);
+        render(
+            <MemoryRouter initialEntries={['/']}>
+                <Routes>
+                    <Route path="/" element={<CountryCard country={mockCountry} />} />
+                </Routes>
+            </MemoryRouter>);
         const linkElement = screen.getByText(new RegExp(mockCountry.name.common));
         expect(linkElement).toBeInTheDocument();
     });
 
     it('renders the country flag', () => {
-        render(<CountryCard country={mockCountry}/>);
+        render(
+            <MemoryRouter initialEntries={['/']}>
+                <Routes>
+                    <Route path="/" element={<CountryCard country={mockCountry} />} />
+                </Routes>
+            </MemoryRouter>);
         const img = screen.getByRole('img');
         expect(img).toHaveAttribute('src', mockCountry.flags.svg);
         expect(img).toHaveAttribute('alt', mockCountry.flags.alt);
     });
 
     it('renders the country population', () => {
-        render(<CountryCard country={mockCountry}/>);
-        const populationElement = screen.getByText(
+        render(
+            <MemoryRouter initialEntries={['/']}>
+                <Routes>
+                    <Route path="/" element={<CountryCard country={mockCountry} />} />
+                </Routes>
+            </MemoryRouter>);        const populationElement = screen.getByText(
             new RegExp(`Population: ${mockCountry.population}`)
         );
         expect(populationElement).toBeInTheDocument();
     });
 
     it('renders the country region', () => {
-        render(<CountryCard country={mockCountry}/>);
+        render(
+            <MemoryRouter initialEntries={['/']}>
+                <Routes>
+                    <Route path="/" element={<CountryCard country={mockCountry} />} />
+                </Routes>
+            </MemoryRouter>);
         const regionElement = screen.getByText(
             new RegExp(`Region: ${mockCountry.region}`)
         );
@@ -57,7 +77,12 @@ describe('CountryCard test', () => {
     });
 
     it('renders the country capital', () => {
-        render(<CountryCard country={mockCountry}/>);
+        render(
+            <MemoryRouter initialEntries={['/']}>
+                <Routes>
+                    <Route path="/" element={<CountryCard country={mockCountry} />} />
+                </Routes>
+            </MemoryRouter>);
         const capitalElement = screen.getByText(
             new RegExp(`Capital: ${mockCountry.capital.join(', ')}`)
         );
