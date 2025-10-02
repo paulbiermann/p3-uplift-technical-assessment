@@ -25,7 +25,7 @@ const CountryList: React.FC = () => {
         }
 
         fetchCountries();
-    }, [])
+    }, []);
 
     return <div className={styles['country-list-container']}>
         <h2>Countries</h2>

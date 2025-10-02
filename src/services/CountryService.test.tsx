@@ -89,7 +89,7 @@ describe('CountryService test', () => {
 
             const result = await getCountryByCCA3('USA');
 
-            expect(result).toEqual(mockCountries);
+            expect(result).toEqual(mockCountries[0]);
         });
 
         it('throws an error when response is not ok', async() => {

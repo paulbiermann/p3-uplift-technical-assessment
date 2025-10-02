@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import CountryList from './CountryList';
 import { getCountries } from '../../services/CountryService';
 import { Country } from '../../entities/types';
+import { MemoryRouter } from 'react-router';
 
 jest.mock('../../services/CountryService');
 const mockGetCountries = getCountries as jest.MockedFunction<typeof getCountries>;
@@ -67,7 +68,11 @@ const mockCountries: Country[] = [
 describe('CountriesList Test', () => {
     it('should call CountryService.getCountries', async () => {
         mockGetCountries.mockResolvedValueOnce(mockCountries);
-        render(<CountryList />);
+        render(
+            <MemoryRouter>
+                <CountryList />
+            </MemoryRouter>
+        );
         await waitFor(() => {
             expect(mockGetCountries).toHaveBeenCalledTimes(1);
         });
@@ -75,7 +80,11 @@ describe('CountriesList Test', () => {
 
     it('should render a list of country cards', async() => {
         mockGetCountries.mockResolvedValueOnce(mockCountries);
-        render(<CountryList />);
+        render(
+            <MemoryRouter>
+                <CountryList />
+            </MemoryRouter>
+        );
         expect(await screen.findByText(mockCountries[0].name.common)).toBeInTheDocument();
         expect(await screen.findByText(mockCountries[1].name.common)).toBeInTheDocument();
     });
@@ -84,13 +93,21 @@ describe('CountriesList Test', () => {
         mockGetCountries.mockImplementationOnce(
             () => new Promise(() => {}) // never resolves
         );
-        render(<CountryList />);
+        render(
+            <MemoryRouter>
+                <CountryList />
+            </MemoryRouter>
+        );
         expect(await screen.findByText('Loading...')).toBeInTheDocument();
     });
 
     it('should render an error message', async() => {
         mockGetCountries.mockRejectedValueOnce(new Error(''));
-        render(<CountryList />);
+        render(
+            <MemoryRouter>
+                <CountryList />
+            </MemoryRouter>
+        );
         expect(await screen.findByText('There was an error loading country information. Try refreshing the page.')).toBeInTheDocument();
     });
 });

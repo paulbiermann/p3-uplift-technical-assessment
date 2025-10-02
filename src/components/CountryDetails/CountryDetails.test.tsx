@@ -1,8 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import CountryDetails from './CountryDetails';
 import { Country } from '../../entities/types';
+import { getCountryByCCA3 } from '../../services/CountryService';
+import { MemoryRouter, Route, Routes } from 'react-router';
 
 const url = 'https://restcountries.com/v3.1/alpha/USA';
+
+jest.mock('../../services/CountryService');
+const mockGetCountryByCCA3 = getCountryByCCA3 as jest.MockedFunction<typeof getCountryByCCA3>;
+
 const mockCountry: Country = {
     "flags": {
         "png": "https://flagcdn.com/w320/us.png",
@@ -28,11 +34,36 @@ const mockCountry: Country = {
 };
 
 describe('CountryDetails test', () => {
-    it('renders placeholder', () => {
-        render(<CountryDetails/>);
-        const linkElement = screen.getByText('CountryDetails Place Holder');
-        expect(linkElement).toBeInTheDocument();
+    beforeEach(() => {
+        jest.resetAllMocks();
     });
 
-    it('')
+    it('renders country official name', async () => {
+        mockGetCountryByCCA3.mockResolvedValueOnce(mockCountry);
+        render(
+            <MemoryRouter initialEntries={['/country/USA']}>
+                <Routes>
+                    <Route path="/country/:cca3" element={<CountryDetails />} />
+                </Routes>
+            </MemoryRouter>
+        );
+
+        const heading = await screen.findByRole('heading', {
+            name: mockCountry.name.official,
+        });
+        expect(heading).toBeInTheDocument();
+    });
+
+    it('should call CountryService.getCountryByCCA3', async () => {
+        mockGetCountryByCCA3.mockResolvedValueOnce(mockCountry);
+        render(
+            <MemoryRouter initialEntries={['/country/USA']}>
+                <Routes>
+                    <Route path="/country/:cca3" element={<CountryDetails />} />
+                </Routes>
+            </MemoryRouter>
+        );
+            
+        await waitFor(() => expect(mockGetCountryByCCA3).toHaveBeenCalledTimes(1));
+    });
 });
