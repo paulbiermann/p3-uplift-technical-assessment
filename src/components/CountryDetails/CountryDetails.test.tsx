@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import CountryDetails from './CountryDetails';
 import { Country } from '../../entities/types';
 
+const url = 'https://restcountries.com/v3.1/alpha/USA';
 const mockCountry: Country = {
     "flags": {
         "png": "https://flagcdn.com/w320/us.png",
@@ -32,4 +33,6 @@ describe('CountryDetails test', () => {
         const linkElement = screen.getByText('CountryDetails Place Holder');
         expect(linkElement).toBeInTheDocument();
     });
+
+    it('')
 });

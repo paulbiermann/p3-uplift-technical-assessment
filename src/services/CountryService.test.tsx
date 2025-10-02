@@ -1,7 +1,8 @@
-import { getCountries } from './CountryService';
+import { getCountries, getCountryByCCA3 } from './CountryService';
 import { Country } from '../entities/types';
 
-const url = 'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,cca3';
+const getCountriesUrl = 'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,cca3';
+const getCountryByCCA3Url = 'https://restcountries.com/v3.1/alpha/USA';
 const mockCountries: Country[] = [
     {
         "flags": {
@@ -28,40 +29,76 @@ const mockCountries: Country[] = [
     }
 ];
 
-describe('CountryService.getCountries test', () => {
+describe('CountryService test', () => {
     beforeEach(() => {
         jest.resetAllMocks();
     });
 
-    it('calls the restcountries all endpoint', async() => {
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: true,
-            json: jest.fn().mockResolvedValue(mockCountries)
+    describe('getCountries test', () => {
+        it('calls the restcountries all endpoint', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: true,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
+
+            await getCountries();
+
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+            expect(global.fetch).toHaveBeenCalledWith(getCountriesUrl);
         });
 
-        await getCountries();
+        it('returns a list of countries when response is ok', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: true,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
 
-        expect(global.fetch).toHaveBeenCalledTimes(1);
-        expect(global.fetch).toHaveBeenCalledWith(url);
+            const result = await getCountries();
+
+            expect(result).toEqual(mockCountries);
+        });
+
+        it('throws an error when response is not ok', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: false,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
+
+            await expect(getCountries()).rejects.toThrow();
+        });
     });
 
-    it('returns a list of countries when response is ok', async() => {
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: true,
-            json: jest.fn().mockResolvedValue(mockCountries)
+    describe('getCountryByCCA3 test', () => {
+        it('calls the country code endpoint', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: true,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
+
+            await getCountryByCCA3('USA');
+
+            expect(global.fetch).toHaveBeenCalledTimes(1);
+            expect(global.fetch).toHaveBeenCalledWith(getCountryByCCA3Url);
         });
 
-        const result = await getCountries();
+        it('returns a country when response is ok', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: true,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
 
-        expect(result).toEqual(mockCountries);
+            const result = await getCountryByCCA3('USA');
+
+            expect(result).toEqual(mockCountries);
+        });
+
+        it('throws an error when response is not ok', async() => {
+            global.fetch = jest.fn().mockResolvedValue({
+                ok: false,
+                json: jest.fn().mockResolvedValue(mockCountries)
+            });
+
+            await expect(getCountryByCCA3('USA')).rejects.toThrow();
+        });
     });
-
-    it('throws an error when response is not ok', async() => {
-        global.fetch = jest.fn().mockResolvedValue({
-            ok: false,
-            json: jest.fn().mockResolvedValue(mockCountries)
-        });
-
-        await expect(getCountries()).rejects.toThrow();
-    })
 });

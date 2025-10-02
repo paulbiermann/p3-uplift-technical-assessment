@@ -1,7 +1,7 @@
 import React from "react";
 import { Country } from "../../entities/types";
 import styles from './CountryCard.module.css'
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface CountryCardProps {
     country: Country;
